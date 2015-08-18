@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>Practical data mining course project</title>
+<title>Practical machine learning course project</title>
 
 <script type="text/javascript">
 window.onload = function() {
@@ -201,9 +201,7 @@ hr {
 </head>
 
 <body>
-<h1>Practical data mining course project</h1>
-
-<h3>By Chau Nguyen (<a href="mailto:nhchau@gmai.com">nhchau@gmai.com</a>)</h3>
+<h1>Practical machine learning course project</h1>
 
 <h2>Load and check data</h2>
 
@@ -387,7 +385,7 @@ usertraintest = function(username, method) {
     te2 = tefilter[, -c(1,2,5,6)]
 
     # Use multicore feature
-    registerDoMC(cores=80)
+    registerDoMC(cores=40)  # We run this project on a 40-core machine
     # Train model on TR.train
     t = system.time(fit &lt;- train(classe ~ ., data=tr1, method=method))
     # Report time for training and testing
@@ -428,25 +426,25 @@ t1 = system.time(res1 &lt;- mypredict(&#39;rpart&#39;))
 
 <pre><code>## [1] &quot;----- Applying rpart method -----&quot;
 ## [1] &quot;Train and test user: carlitos, method: rpart&quot;
-## [1] &quot;Elapse time = 2s&quot;
+## [1] &quot;Elapse time = 1.9s&quot;
 ## [1] &quot;Accuracy: 0.685, 95% CI: (0.658,0.71)&quot;
 ## [1] &quot;Train and test user: pedro, method: rpart&quot;
-## [1] &quot;Elapse time = 2s&quot;
+## [1] &quot;Elapse time = 1.8s&quot;
 ## [1] &quot;Accuracy: 0.627, 95% CI: (0.597,0.656)&quot;
 ## [1] &quot;Train and test user: adelmo, method: rpart&quot;
-## [1] &quot;Elapse time = 2.1s&quot;
+## [1] &quot;Elapse time = 2s&quot;
 ## [1] &quot;Accuracy: 0.687, 95% CI: (0.663,0.71)&quot;
 ## [1] &quot;Train and test user: charles, method: rpart&quot;
-## [1] &quot;Elapse time = 2.2s&quot;
+## [1] &quot;Elapse time = 1.9s&quot;
 ## [1] &quot;Accuracy: 0.665, 95% CI: (0.64,0.69)&quot;
 ## [1] &quot;Train and test user: eurico, method: rpart&quot;
-## [1] &quot;Elapse time = 2.1s&quot;
+## [1] &quot;Elapse time = 1.9s&quot;
 ## [1] &quot;Accuracy: 0.835, 95% CI: (0.813,0.855)&quot;
 ## [1] &quot;Train and test user: jeremy, method: rpart&quot;
-## [1] &quot;Elapse time = 2.1s&quot;
+## [1] &quot;Elapse time = 1.9s&quot;
 ## [1] &quot;Accuracy: 0.698, 95% CI: (0.673,0.722)&quot;
 ## [1] &quot;Train and test user: AllUsers, method: rpart&quot;
-## [1] &quot;Elapse time = 7.7s&quot;
+## [1] &quot;Elapse time = 9.1s&quot;
 ## [1] &quot;Accuracy: 0.49, 95% CI: (0.479,0.501)&quot;
 </code></pre>
 
@@ -455,25 +453,25 @@ t1 = system.time(res1 &lt;- mypredict(&#39;rpart&#39;))
 
 <pre><code>## [1] &quot;----- Applying C5.0 method -----&quot;
 ## [1] &quot;Train and test user: carlitos, method: C5.0&quot;
-## [1] &quot;Elapse time = 9.7s&quot;
+## [1] &quot;Elapse time = 12s&quot;
 ## [1] &quot;Accuracy: 0.998, 95% CI: (0.994,1)&quot;
 ## [1] &quot;Train and test user: pedro, method: C5.0&quot;
-## [1] &quot;Elapse time = 6.3s&quot;
+## [1] &quot;Elapse time = 7s&quot;
 ## [1] &quot;Accuracy: 1, 95% CI: (0.996,1)&quot;
 ## [1] &quot;Train and test user: adelmo, method: C5.0&quot;
-## [1] &quot;Elapse time = 9.8s&quot;
+## [1] &quot;Elapse time = 12s&quot;
 ## [1] &quot;Accuracy: 1, 95% CI: (0.998,1)&quot;
 ## [1] &quot;Train and test user: charles, method: C5.0&quot;
-## [1] &quot;Elapse time = 8.8s&quot;
+## [1] &quot;Elapse time = 11s&quot;
 ## [1] &quot;Accuracy: 0.998, 95% CI: (0.994,1)&quot;
 ## [1] &quot;Train and test user: eurico, method: C5.0&quot;
-## [1] &quot;Elapse time = 7.7s&quot;
+## [1] &quot;Elapse time = 9.2s&quot;
 ## [1] &quot;Accuracy: 1, 95% CI: (0.997,1)&quot;
 ## [1] &quot;Train and test user: jeremy, method: C5.0&quot;
-## [1] &quot;Elapse time = 6.5s&quot;
+## [1] &quot;Elapse time = 7.3s&quot;
 ## [1] &quot;Accuracy: 1, 95% CI: (0.997,1)&quot;
 ## [1] &quot;Train and test user: AllUsers, method: C5.0&quot;
-## [1] &quot;Elapse time = 168s&quot;
+## [1] &quot;Elapse time = 194s&quot;
 ## [1] &quot;Accuracy: 0.999, 95% CI: (0.998,0.999)&quot;
 </code></pre>
 
@@ -483,26 +481,26 @@ t3 = system.time(res3 &lt;- mypredict(&#39;rf&#39;))
 
 <pre><code>## [1] &quot;----- Applying rf method -----&quot;
 ## [1] &quot;Train and test user: carlitos, method: rf&quot;
-## [1] &quot;Elapse time = 15s&quot;
+## [1] &quot;Elapse time = 16s&quot;
 ## [1] &quot;Accuracy: 0.998, 95% CI: (0.994,1)&quot;
 ## [1] &quot;Train and test user: pedro, method: rf&quot;
 ## [1] &quot;Elapse time = 13s&quot;
 ## [1] &quot;Accuracy: 1, 95% CI: (0.996,1)&quot;
 ## [1] &quot;Train and test user: adelmo, method: rf&quot;
-## [1] &quot;Elapse time = 19s&quot;
+## [1] &quot;Elapse time = 21s&quot;
 ## [1] &quot;Accuracy: 1, 95% CI: (0.998,1)&quot;
 ## [1] &quot;Train and test user: charles, method: rf&quot;
-## [1] &quot;Elapse time = 15s&quot;
+## [1] &quot;Elapse time = 17s&quot;
 ## [1] &quot;Accuracy: 0.999, 95% CI: (0.996,1)&quot;
 ## [1] &quot;Train and test user: eurico, method: rf&quot;
-## [1] &quot;Elapse time = 13s&quot;
-## [1] &quot;Accuracy: 0.999, 95% CI: (0.995,1)&quot;
+## [1] &quot;Elapse time = 15s&quot;
+## [1] &quot;Accuracy: 0.998, 95% CI: (0.994,1)&quot;
 ## [1] &quot;Train and test user: jeremy, method: rf&quot;
-## [1] &quot;Elapse time = 16s&quot;
+## [1] &quot;Elapse time = 17s&quot;
 ## [1] &quot;Accuracy: 1, 95% CI: (0.997,1)&quot;
 ## [1] &quot;Train and test user: AllUsers, method: rf&quot;
-## [1] &quot;Elapse time = 230s&quot;
-## [1] &quot;Accuracy: 0.999, 95% CI: (0.999,1)&quot;
+## [1] &quot;Elapse time = 223s&quot;
+## [1] &quot;Accuracy: 0.998, 95% CI: (0.997,0.999)&quot;
 </code></pre>
 
 <pre><code class="r">res = merge(res, res3, by.x=&#39;problem_id&#39;, by.y=&#39;problem_id&#39;, all=T)
@@ -543,7 +541,7 @@ TR.test data set for FILTER and ALL scenarios.</p>
 <p>The C5.0 and Random Forests methods have very similar accuracy and much better than
 that of CART method, on the TR.test data set for both FILTER and ALL scenarios.
 However the C5.0 total running time is lower than that of Random Forest
-1.4 times.</p>
+1.3 times.</p>
 
 <p>On the prediction results, the C5.0 and Random Forests
 give the same prediction for both FILTER and ALL scenarios. Therefore we can conclude that

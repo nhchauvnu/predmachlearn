@@ -1,5 +1,4 @@
-# Practical data mining course project
-### By Chau Nguyen (nhchau@gmai.com)
+# Practical machine learning course project
 
 ## Load and check data
 First we check if the data files exist on the local disk. If not
@@ -101,7 +100,7 @@ usertraintest = function(username, method) {
 	te2 = tefilter[, -c(1,2,5,6)]
 
 	# Use multicore feature
-	registerDoMC(cores=80)
+	registerDoMC(cores=40)	# We run this project on a 40-core machine
 	# Train model on TR.train
 	t = system.time(fit <- train(classe ~ ., data=tr1, method=method))
 	# Report time for training and testing
