@@ -1,3 +1,3 @@
 # Practical machine learning assignment
-by Chau Nguyen
-# predmachlearn
+"Practical machine learning" course project
+performed by Chau Nguyen.

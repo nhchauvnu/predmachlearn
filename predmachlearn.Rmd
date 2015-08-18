@@ -1,0 +1,176 @@
+# Practical data mining course project
+### By Chau Nguyen (nhchau@gmai.com)
+
+## Load and check data
+First we check if the data files exist on the local disk. If not
+we download them. Then we load the data into R.
+```{r, echo=T}
+if (!file.exists('pml-training.csv')) {
+	print("Download training data set")
+	download.file('https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv',
+		dest='pml-training.csv', quiet=F, method='curl')
+}
+# Load training data set
+tr = read.csv('pml-training.csv')
+
+if (!file.exists('pml-testing.csv')) {
+	print("Download testing data set")
+	download.file('https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv',
+		dest='pml-testing.csv', quiet=F, method='curl')
+}
+# Load testing data set
+te = read.csv('pml-testing.csv')
+```
+
+## Data cleaning
+We count the number of NA values on all variables of
+the training and testing data sets. Variables with too many
+NA values will be removed from the data sets.
+```{r, echo=T}
+# natr is a vector contains number of NA in each variables of the training set
+natr = sapply(1:ncol(tr), function(i) {length(which(is.na(tr[,i])))})
+# Show NAs in the training set in percent
+natr/nrow(tr)*100
+
+# nate is a vector contains number of NA in each variables of the testing set
+nate = sapply(1:ncol(te), function(i) {length(which(is.na(te[,i])))})
+# Show NAs in the testing set in percent
+nate/nrow(tr)*100
+
+# Which variables on the training set has many NAs?
+settr = which(natr>0)
+length(settr)
+settr
+# Which variables on the testing set has many NAs?
+sette = which(nate>0)
+length(sette)
+sette
+
+# Which columns on the two sets cannot be used?
+setall = union(settr, sette)
+
+# Eliminate the bad variables we have smaller training and testing
+# data sets
+tr = tr[, -setall]
+te = te[, -setall]
+```
+
+## Train models for prediction
+After remove "bad" variables we have a new training and a new test data set,
+refers as TR and TE data sets, prepectively. To predict the 20 test cases
+in TE, we first divide the TR set into 
+a training set and a testing set. We refer them as TR.train and TR.test data
+sets, respectively. We build three models based on CART, C5.0 and Random
+Forest methods on TR.train, calculate the accuracy of the models on TR.test, then choose
+the most appropriate model to predict on TE.
+
+The TR and TE data sets contain data for `r length(unique(tr$user_name))` users.
+We therefore peform two test scenarios for comparison of accuracy. The first one is
+training and testing on data of each individual user (FILTER case), and the second one is 
+training and testing on data of all users (ALL case). 
+
+The following R code performs what we have described.
+```{r, echo=T}
+library(caret)
+library(rpart)
+library(dplyr)
+library(doMC)
+
+# Set seed value
+set.seed(53234)
+
+# Train and test for each user, or all users if username is AllUsers
+usertraintest = function(username, method) {
+	# Filter by user name
+	print(paste0('Train and test user: ', username, ', method: ', method))
+	if (username!='AllUsers') {
+		trfilter = tr[tr$user_name==username,]
+		tefilter = te[te$user_name==username,]
+	}
+	else {
+		trfilter = tr
+		tefilter = te
+	}
+
+	index = createDataPartition(trfilter$classe, p=0.6, list=FALSE)
+
+	# Remove X, user_name, date, cvtd_timestamp, and new_window 
+	# (all of them are factor variables)
+	tr1 = trfilter[index, -c(1,2,5,6)]
+	te1 = trfilter[-index, -c(1,2,5,6)]
+	te2 = tefilter[, -c(1,2,5,6)]
+
+	# Use multicore feature
+	registerDoMC(cores=80)
+	# Train model on TR.train
+	t = system.time(fit <- train(classe ~ ., data=tr1, method=method))
+	# Report time for training and testing
+	print(paste0('Elapse time = ', format(t['elapsed'], digits=2), 's'))
+	# Test model in TR.test
+	res1 = predict(fit, te1[,-56])
+	m1 = confusionMatrix(te1$classe, res1)
+	acc = format(m1$overall['Accuracy'], digits=3)
+	ci95 = paste0('(', format(m1$overall['AccuracyLower'], digits=3), ',',
+		format(m1$overall['AccuracyUpper'], digits=3),')')
+	print(paste0('Accuracy: ', acc, ', 95% CI: ', ci95))
+
+	# Predict on TE
+	res2 = predict(fit, te2)
+	# Return results
+	data.frame(problem_id=te2$problem_id, answer_filter=res2)
+}
+
+# Train, test and predict
+mypredict = function (method) {
+	print(paste0("----- Applying ", method, " method -----"))
+	users = as.character(unique(tr$user_name))
+	results = NULL
+	sapply(users, function(u) {
+		results <<- rbind(results, usertraintest(u, method))
+	})
+	results = arrange(results, problem_id)
+
+	resall = usertraintest('AllUsers', method)
+	resall = arrange(resall, problem_id)
+	results = cbind(results, answer_all=resall$answer)
+	rm(resall)
+	data.frame(results)
+}
+
+t1 = system.time(res1 <- mypredict('rpart'))
+t2 = system.time(res2 <- mypredict('C5.0'))
+res = merge(res1, res2, by.x='problem_id', by.y='problem_id', all=T)
+t3 = system.time(res3 <- mypredict('rf'))
+res = merge(res, res3, by.x='problem_id', by.y='problem_id', all=T)
+names(res) = c('problem_id', 'rpart_filter', 'rpart_all',
+	'C5.0_filter', 'C5.0_all', 'rf_filter', 'rf_all')
+rm(res1);rm(res2);rm(res3)
+res
+```
+
+## Conclusion and prediction results
+We see that the CART (rpart) method is worst for accuracy when testing on
+TR.test data set for FILTER and ALL scenarios.
+
+The C5.0 and Random Forests methods have very similar accuracy and much better than
+that of CART method, on the TR.test data set for both FILTER and ALL scenarios.
+However the C5.0 total running time is lower than that of Random Forest
+`r format(t3['elapsed']/t2['elapsed'],digits=2)` times.
+
+On the prediction results, the C5.0 and Random Forests
+give the same prediction for both FILTER and ALL scenarios. Therefore we can conclude that
+in this project the C5.0 is the most appropriate method for accuracy and performance. We
+use C5.0 prediction results (column C5.0_filter) for submission.
+
+```{r}
+# Submission code
+pml_write_files = function(x){
+  n = length(x)
+  for(i in 1:n){
+    filename = paste0("problem_id_",i,".txt")
+    write.table(x[i],file=filename,quote=FALSE,row.names=FALSE,col.names=FALSE)
+  }
+}
+
+pml_write_files(res$C5.0_filter)
+```
