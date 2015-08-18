@@ -1,4 +1,5 @@
 # Practical machine learning course project
+#### by Chau Nguyen
 
 ## Load and check data
 First we check if the data files exist on the local disk. If not
@@ -242,7 +243,7 @@ t1 = system.time(res1 <- mypredict('rpart'))
 ## [1] "Elapse time = 1.8s"
 ## [1] "Accuracy: 0.627, 95% CI: (0.597,0.656)"
 ## [1] "Train and test user: adelmo, method: rpart"
-## [1] "Elapse time = 2s"
+## [1] "Elapse time = 2.1s"
 ## [1] "Accuracy: 0.687, 95% CI: (0.663,0.71)"
 ## [1] "Train and test user: charles, method: rpart"
 ## [1] "Elapse time = 1.9s"
@@ -251,10 +252,10 @@ t1 = system.time(res1 <- mypredict('rpart'))
 ## [1] "Elapse time = 1.9s"
 ## [1] "Accuracy: 0.835, 95% CI: (0.813,0.855)"
 ## [1] "Train and test user: jeremy, method: rpart"
-## [1] "Elapse time = 1.9s"
+## [1] "Elapse time = 2s"
 ## [1] "Accuracy: 0.698, 95% CI: (0.673,0.722)"
 ## [1] "Train and test user: AllUsers, method: rpart"
-## [1] "Elapse time = 9.1s"
+## [1] "Elapse time = 8s"
 ## [1] "Accuracy: 0.49, 95% CI: (0.479,0.501)"
 ```
 
@@ -268,7 +269,7 @@ t2 = system.time(res2 <- mypredict('C5.0'))
 ## [1] "Elapse time = 12s"
 ## [1] "Accuracy: 0.998, 95% CI: (0.994,1)"
 ## [1] "Train and test user: pedro, method: C5.0"
-## [1] "Elapse time = 7s"
+## [1] "Elapse time = 7.2s"
 ## [1] "Accuracy: 1, 95% CI: (0.996,1)"
 ## [1] "Train and test user: adelmo, method: C5.0"
 ## [1] "Elapse time = 12s"
@@ -277,13 +278,13 @@ t2 = system.time(res2 <- mypredict('C5.0'))
 ## [1] "Elapse time = 11s"
 ## [1] "Accuracy: 0.998, 95% CI: (0.994,1)"
 ## [1] "Train and test user: eurico, method: C5.0"
-## [1] "Elapse time = 9.2s"
+## [1] "Elapse time = 8.9s"
 ## [1] "Accuracy: 1, 95% CI: (0.997,1)"
 ## [1] "Train and test user: jeremy, method: C5.0"
-## [1] "Elapse time = 7.3s"
+## [1] "Elapse time = 7.2s"
 ## [1] "Accuracy: 1, 95% CI: (0.997,1)"
 ## [1] "Train and test user: AllUsers, method: C5.0"
-## [1] "Elapse time = 194s"
+## [1] "Elapse time = 195s"
 ## [1] "Accuracy: 0.999, 95% CI: (0.998,0.999)"
 ```
 
@@ -304,16 +305,16 @@ t3 = system.time(res3 <- mypredict('rf'))
 ## [1] "Elapse time = 21s"
 ## [1] "Accuracy: 1, 95% CI: (0.998,1)"
 ## [1] "Train and test user: charles, method: rf"
-## [1] "Elapse time = 17s"
+## [1] "Elapse time = 18s"
 ## [1] "Accuracy: 0.999, 95% CI: (0.996,1)"
 ## [1] "Train and test user: eurico, method: rf"
 ## [1] "Elapse time = 15s"
 ## [1] "Accuracy: 0.998, 95% CI: (0.994,1)"
 ## [1] "Train and test user: jeremy, method: rf"
-## [1] "Elapse time = 17s"
+## [1] "Elapse time = 18s"
 ## [1] "Accuracy: 1, 95% CI: (0.997,1)"
 ## [1] "Train and test user: AllUsers, method: rf"
-## [1] "Elapse time = 223s"
+## [1] "Elapse time = 224s"
 ## [1] "Accuracy: 0.998, 95% CI: (0.997,0.999)"
 ```
 

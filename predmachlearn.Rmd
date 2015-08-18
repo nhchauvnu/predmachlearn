@@ -1,4 +1,5 @@
 # Practical machine learning course project
+#### by Chau Nguyen
 
 ## Load and check data
 First we check if the data files exist on the local disk. If not
