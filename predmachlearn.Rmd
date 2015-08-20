@@ -102,10 +102,14 @@ usertraintest = function(username, method) {
 
 	# Use multicore feature
 	registerDoMC(cores=40)	# We run this project on a 40-core machine
+	# Set train control option: Using 10-fold cross-validation, repeat 10 times
+	tc = trainControl(method="repeatedcv", number=10, repeats=10, allowParallel=TRUE)
 	# Train model on TR.train
-	t = system.time(fit <- train(classe ~ ., data=tr1, method=method))
+	t = system.time(fit <- train(classe ~ ., data=tr1, method=method, trControl=tc))
 	# Report time for training and testing
 	print(paste0('Elapse time = ', format(t['elapsed'], digits=2), 's'))
+	# Print out model
+	print(fit)
 	# Test model in TR.test
 	res1 = predict(fit, te1[,-56])
 	m1 = confusionMatrix(te1$classe, res1)

@@ -196,10 +196,14 @@ usertraintest = function(username, method) {
 
 	# Use multicore feature
 	registerDoMC(cores=40)	# We run this project on a 40-core machine
+	# Set train control option: Using 10-fold cross-validation, repeat 10 times
+	tc = trainControl(method="repeatedcv", number=10, repeats=10, allowParallel=TRUE)
 	# Train model on TR.train
-	t = system.time(fit <- train(classe ~ ., data=tr1, method=method))
+	t = system.time(fit <- train(classe ~ ., data=tr1, method=method, trControl=tc))
 	# Report time for training and testing
 	print(paste0('Elapse time = ', format(t['elapsed'], digits=2), 's'))
+	# Print out model
+	print(fit)
 	# Test model in TR.test
 	res1 = predict(fit, te1[,-56])
 	m1 = confusionMatrix(te1$classe, res1)
@@ -237,26 +241,152 @@ t1 = system.time(res1 <- mypredict('rpart'))
 ```
 ## [1] "----- Applying rpart method -----"
 ## [1] "Train and test user: carlitos, method: rpart"
-## [1] "Elapse time = 1.9s"
+## [1] "Elapse time = 2.8s"
+## CART 
+## 
+## 1869 samples
+##   55 predictor
+##    5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 1679, 1683, 1683, 1681, 1684, 1683, ... 
+## Resampling results across tuning parameters:
+## 
+##   cp         Accuracy   Kappa      Accuracy SD  Kappa SD 
+##   0.2156433  0.7508785  0.6817215  0.07893147   0.1027053
+##   0.2668129  0.5874792  0.4654168  0.09819991   0.1316113
+##   0.3019006  0.3884358  0.1823839  0.10986725   0.1658200
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final value used for the model was cp = 0.2156433. 
 ## [1] "Accuracy: 0.685, 95% CI: (0.658,0.71)"
 ## [1] "Train and test user: pedro, method: rpart"
-## [1] "Elapse time = 1.8s"
-## [1] "Accuracy: 0.627, 95% CI: (0.597,0.656)"
+## [1] "Elapse time = 2.7s"
+## CART 
+## 
+## 1568 samples
+##   55 predictor
+##    5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 1410, 1411, 1411, 1412, 1411, 1413, ... 
+## Resampling results across tuning parameters:
+## 
+##   cp           Accuracy   Kappa      Accuracy SD  Kappa SD  
+##   0.006756757  0.9815697  0.9768858  0.008823799  0.01106669
+##   0.238597973  0.7401504  0.6732190  0.153918501  0.19365060
+##   0.250844595  0.5319614  0.3995104  0.162508207  0.22570965
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final value used for the model was cp = 0.006756757. 
+## [1] "Accuracy: 0.989, 95% CI: (0.981,0.995)"
 ## [1] "Train and test user: adelmo, method: rpart"
-## [1] "Elapse time = 2.1s"
+## [1] "Elapse time = 2.9s"
+## CART 
+## 
+## 2336 samples
+##   55 predictor
+##    5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 2103, 2101, 2102, 2102, 2103, 2103, ... 
+## Resampling results across tuning parameters:
+## 
+##   cp         Accuracy   Kappa      Accuracy SD  Kappa SD 
+##   0.2486255  0.7569716  0.6865007  0.08458927   0.1098581
+##   0.2730605  0.5671288  0.4389521  0.09198423   0.1203022
+##   0.2828345  0.4031575  0.1831774  0.09850499   0.1733872
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final value used for the model was cp = 0.2486255. 
 ## [1] "Accuracy: 0.687, 95% CI: (0.663,0.71)"
 ## [1] "Train and test user: charles, method: rpart"
-## [1] "Elapse time = 1.9s"
-## [1] "Accuracy: 0.665, 95% CI: (0.64,0.69)"
+## [1] "Elapse time = 2.8s"
+## CART 
+## 
+## 2124 samples
+##   55 predictor
+##    5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 1911, 1912, 1912, 1911, 1912, 1910, ... 
+## Resampling results across tuning parameters:
+## 
+##   cp         Accuracy   Kappa      Accuracy SD  Kappa SD 
+##   0.2424242  0.7575389  0.6915652  0.09061928   0.1163591
+##   0.2664141  0.5604512  0.4369779  0.09865881   0.1281323
+##   0.2821970  0.3355000  0.1213479  0.10225924   0.1525295
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final value used for the model was cp = 0.2424242. 
+## [1] "Accuracy: 0.664, 95% CI: (0.639,0.689)"
 ## [1] "Train and test user: eurico, method: rpart"
-## [1] "Elapse time = 1.9s"
-## [1] "Accuracy: 0.835, 95% CI: (0.813,0.855)"
+## [1] "Elapse time = 2.8s"
+## CART 
+## 
+## 1845 samples
+##   55 predictor
+##    5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 1660, 1661, 1659, 1661, 1661, 1660, ... 
+## Resampling results across tuning parameters:
+## 
+##   cp         Accuracy   Kappa      Accuracy SD  Kappa SD 
+##   0.2443439  0.7445941  0.6747014  0.08824225   0.1126419
+##   0.2639517  0.5741498  0.4564074  0.09411240   0.1209288
+##   0.2654600  0.3866137  0.1807218  0.09407122   0.1610208
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final value used for the model was cp = 0.2443439. 
+## [1] "Accuracy: 0.66, 95% CI: (0.632,0.686)"
 ## [1] "Train and test user: jeremy, method: rpart"
-## [1] "Elapse time = 2s"
-## [1] "Accuracy: 0.698, 95% CI: (0.673,0.722)"
+## [1] "Elapse time = 2.9s"
+## CART 
+## 
+## 2045 samples
+##   55 predictor
+##    5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 1841, 1842, 1840, 1840, 1840, 1841, ... 
+## Resampling results across tuning parameters:
+## 
+##   cp         Accuracy   Kappa      Accuracy SD  Kappa SD  
+##   0.2324365  0.7693950  0.6971842  0.07524166   0.09977617
+##   0.2526158  0.6042563  0.4771288  0.08151139   0.10902279
+##   0.2899851  0.4203978  0.1523653  0.09146991   0.18755531
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final value used for the model was cp = 0.2324365. 
+## [1] "Accuracy: 0.697, 95% CI: (0.672,0.721)"
 ## [1] "Train and test user: AllUsers, method: rpart"
-## [1] "Elapse time = 8s"
-## [1] "Accuracy: 0.49, 95% CI: (0.479,0.501)"
+## [1] "Elapse time = 11s"
+## CART 
+## 
+## 11776 samples
+##    55 predictor
+##     5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 10598, 10599, 10598, 10598, 10599, 10598, ... 
+## Resampling results across tuning parameters:
+## 
+##   cp          Accuracy   Kappa       Accuracy SD  Kappa SD  
+##   0.03921452  0.5467842  0.41830298  0.04738216   0.07344077
+##   0.05546986  0.4530352  0.26794763  0.06970768   0.11393153
+##   0.11271951  0.3230059  0.05908317  0.03829321   0.05841242
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final value used for the model was cp = 0.03921452. 
+## [1] "Accuracy: 0.525, 95% CI: (0.514,0.536)"
 ```
 
 ```r
@@ -266,25 +396,221 @@ t2 = system.time(res2 <- mypredict('C5.0'))
 ```
 ## [1] "----- Applying C5.0 method -----"
 ## [1] "Train and test user: carlitos, method: C5.0"
-## [1] "Elapse time = 12s"
-## [1] "Accuracy: 0.998, 95% CI: (0.994,1)"
+## [1] "Elapse time = 34s"
+## C5.0 
+## 
+## 1869 samples
+##   55 predictor
+##    5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 1683, 1681, 1681, 1682, 1683, 1683, ... 
+## Resampling results across tuning parameters:
+## 
+##   model  winnow  trials  Accuracy   Kappa      Accuracy SD  Kappa SD   
+##   rules  FALSE    1      0.9945482  0.9931092  0.006654273  0.008409649
+##   rules  FALSE   10      0.9981303  0.9976367  0.003668777  0.004637816
+##   rules  FALSE   20      0.9983980  0.9979751  0.003437186  0.004345117
+##   rules   TRUE    1      0.9964159  0.9954706  0.005209036  0.006578199
+##   rules   TRUE   10      0.9985555  0.9981742  0.002930361  0.003704108
+##   rules   TRUE   20      0.9988784  0.9985824  0.002661790  0.003364411
+##   tree   FALSE    1      0.9929956  0.9911467  0.006854394  0.008662962
+##   tree   FALSE   10      0.9978063  0.9972264  0.003958215  0.005005105
+##   tree   FALSE   20      0.9981809  0.9977005  0.003499598  0.004423890
+##   tree    TRUE    1      0.9942751  0.9927631  0.006503176  0.008218931
+##   tree    TRUE   10      0.9985012  0.9981054  0.002854098  0.003607699
+##   tree    TRUE   20      0.9989299  0.9986473  0.002520730  0.003186177
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final values used for the model were trials = 20, model = tree
+##  and winnow = TRUE. 
+## [1] "Accuracy: 0.997, 95% CI: (0.992,0.999)"
 ## [1] "Train and test user: pedro, method: C5.0"
-## [1] "Elapse time = 7.2s"
-## [1] "Accuracy: 1, 95% CI: (0.996,1)"
+## [1] "Elapse time = 19s"
+## C5.0 
+## 
+## 1568 samples
+##   55 predictor
+##    5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 1410, 1412, 1411, 1411, 1410, 1412, ... 
+## Resampling results across tuning parameters:
+## 
+##   model  winnow  trials  Accuracy   Kappa      Accuracy SD  Kappa SD   
+##   rules  FALSE    1      0.9975771  0.9969619  0.004508942  0.005653668
+##   rules  FALSE   10      0.9989147  0.9986392  0.002576630  0.003230686
+##   rules  FALSE   20      0.9988506  0.9985587  0.002628572  0.003295974
+##   rules   TRUE    1      0.9977723  0.9972065  0.004273698  0.005358776
+##   rules   TRUE   10      0.9988535  0.9985624  0.003310111  0.004150074
+##   rules   TRUE   20      0.9988535  0.9985624  0.003310111  0.004150074
+##   tree   FALSE    1      0.9959851  0.9949657  0.005907579  0.007406676
+##   tree   FALSE   10      0.9982782  0.9978411  0.003374243  0.004230535
+##   tree   FALSE   20      0.9982798  0.9978431  0.003372008  0.004227720
+##   tree    TRUE    1      0.9973280  0.9966496  0.005038681  0.006316715
+##   tree    TRUE   10      0.9983451  0.9979248  0.004103443  0.005145076
+##   tree    TRUE   20      0.9983451  0.9979247  0.004002331  0.005018386
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final values used for the model were trials = 10, model = rules
+##  and winnow = FALSE. 
+## [1] "Accuracy: 0.998, 95% CI: (0.993,1)"
 ## [1] "Train and test user: adelmo, method: C5.0"
-## [1] "Elapse time = 12s"
-## [1] "Accuracy: 1, 95% CI: (0.998,1)"
+## [1] "Elapse time = 13s"
+## C5.0 
+## 
+## 2336 samples
+##   55 predictor
+##    5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 2103, 2102, 2102, 2102, 2104, 2102, ... 
+## Resampling results across tuning parameters:
+## 
+##   model  winnow  trials  Accuracy   Kappa      Accuracy SD  Kappa SD   
+##   rules  FALSE    1      0.9992298  0.9990191  0.001959433  0.002495657
+##   rules  FALSE   10      0.9992298  0.9990192  0.001959433  0.002495495
+##   rules  FALSE   20      0.9992726  0.9990736  0.001830466  0.002331277
+##   rules   TRUE    1      0.9984597  0.9980380  0.002887543  0.003678582
+##   rules   TRUE   10      0.9990164  0.9987471  0.002180384  0.002777676
+##   rules   TRUE   20      0.9989734  0.9986924  0.002202950  0.002806425
+##   tree   FALSE    1      0.9992298  0.9990191  0.001959433  0.002495657
+##   tree   FALSE   10      0.9992726  0.9990736  0.001830466  0.002331277
+##   tree   FALSE   20      0.9992726  0.9990736  0.001830466  0.002331277
+##   tree    TRUE    1      0.9984597  0.9980380  0.002887543  0.003678582
+##   tree    TRUE   10      0.9991873  0.9989648  0.001989323  0.002534260
+##   tree    TRUE   20      0.9992730  0.9990740  0.001829746  0.002330408
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final values used for the model were trials = 20, model = tree
+##  and winnow = TRUE. 
+## [1] "Accuracy: 0.999, 95% CI: (0.996,1)"
 ## [1] "Train and test user: charles, method: C5.0"
-## [1] "Elapse time = 11s"
-## [1] "Accuracy: 0.998, 95% CI: (0.994,1)"
+## [1] "Elapse time = 31s"
+## C5.0 
+## 
+## 2124 samples
+##   55 predictor
+##    5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 1912, 1912, 1911, 1912, 1911, 1912, ... 
+## Resampling results across tuning parameters:
+## 
+##   model  winnow  trials  Accuracy   Kappa      Accuracy SD  Kappa SD   
+##   rules  FALSE    1      0.9937844  0.9921756  0.005428230  0.006832355
+##   rules  FALSE   10      0.9972214  0.9965019  0.003673991  0.004625511
+##   rules  FALSE   20      0.9973631  0.9966805  0.003370201  0.004242653
+##   rules   TRUE    1      0.9948205  0.9934801  0.004361760  0.005490147
+##   rules   TRUE   10      0.9973624  0.9966796  0.003162202  0.003981054
+##   rules   TRUE   20      0.9977400  0.9971550  0.003100579  0.003903554
+##   tree   FALSE    1      0.9929845  0.9911695  0.006037237  0.007597155
+##   tree   FALSE   10      0.9968925  0.9960881  0.004082906  0.005139869
+##   tree   FALSE   20      0.9976924  0.9970950  0.003245058  0.004085164
+##   tree    TRUE    1      0.9936900  0.9920584  0.005364789  0.006747760
+##   tree    TRUE   10      0.9972220  0.9965032  0.003416458  0.004300577
+##   tree    TRUE   20      0.9975040  0.9968580  0.003239090  0.004077387
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final values used for the model were trials = 20, model = rules
+##  and winnow = TRUE. 
+## [1] "Accuracy: 1, 95% CI: (0.997,1)"
 ## [1] "Train and test user: eurico, method: C5.0"
-## [1] "Elapse time = 8.9s"
+## [1] "Elapse time = 26s"
+## C5.0 
+## 
+## 1845 samples
+##   55 predictor
+##    5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 1661, 1661, 1660, 1660, 1660, 1660, ... 
+## Resampling results across tuning parameters:
+## 
+##   model  winnow  trials  Accuracy   Kappa      Accuracy SD  Kappa SD   
+##   rules  FALSE    1      0.9960989  0.9950683  0.005110131  0.006459586
+##   rules  FALSE   10      0.9976145  0.9969849  0.004247893  0.005369417
+##   rules  FALSE   20      0.9982635  0.9978051  0.003078353  0.003890546
+##   rules   TRUE    1      0.9968542  0.9960223  0.004767451  0.006029069
+##   rules   TRUE   10      0.9983742  0.9979451  0.003810509  0.004817027
+##   rules   TRUE   20      0.9984829  0.9980824  0.003615928  0.004571285
+##   tree   FALSE    1      0.9960989  0.9950683  0.005110131  0.006459586
+##   tree   FALSE   10      0.9977221  0.9971204  0.003709958  0.004689885
+##   tree   FALSE   20      0.9981013  0.9976001  0.003645296  0.004607231
+##   tree    TRUE    1      0.9967996  0.9959531  0.004762344  0.006022638
+##   tree    TRUE   10      0.9988064  0.9984910  0.003137538  0.003967065
+##   tree    TRUE   20      0.9988607  0.9985598  0.002703025  0.003417686
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final values used for the model were trials = 20, model = tree
+##  and winnow = TRUE. 
 ## [1] "Accuracy: 1, 95% CI: (0.997,1)"
 ## [1] "Train and test user: jeremy, method: C5.0"
-## [1] "Elapse time = 7.2s"
+## [1] "Elapse time = 17s"
+## C5.0 
+## 
+## 2045 samples
+##   55 predictor
+##    5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 1841, 1840, 1842, 1841, 1842, 1839, ... 
+## Resampling results across tuning parameters:
+## 
+##   model  winnow  trials  Accuracy   Kappa      Accuracy SD  Kappa SD   
+##   rules  FALSE    1      0.9977969  0.9971446  0.003063637  0.003971455
+##   rules  FALSE   10      0.9988732  0.9985401  0.002496152  0.003234338
+##   rules  FALSE   20      0.9988732  0.9985401  0.002496152  0.003234338
+##   rules   TRUE    1      0.9977969  0.9971446  0.003063637  0.003971455
+##   rules   TRUE   10      0.9988245  0.9984768  0.002521446  0.003267195
+##   rules   TRUE   20      0.9988245  0.9984768  0.002521446  0.003267195
+##   tree   FALSE    1      0.9983350  0.9978427  0.002627194  0.003404350
+##   tree   FALSE   10      0.9992157  0.9989846  0.002058692  0.002665352
+##   tree   FALSE   20      0.9992644  0.9990478  0.002018105  0.002612738
+##   tree    TRUE    1      0.9983350  0.9978427  0.002627194  0.003404350
+##   tree    TRUE   10      0.9992647  0.9990480  0.002017607  0.002612460
+##   tree    TRUE   20      0.9992647  0.9990480  0.002017607  0.002612460
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final values used for the model were trials = 10, model = tree
+##  and winnow = TRUE. 
 ## [1] "Accuracy: 1, 95% CI: (0.997,1)"
 ## [1] "Train and test user: AllUsers, method: C5.0"
-## [1] "Elapse time = 195s"
+## [1] "Elapse time = 579s"
+## C5.0 
+## 
+## 11776 samples
+##    55 predictor
+##     5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 10601, 10599, 10598, 10598, 10597, 10598, ... 
+## Resampling results across tuning parameters:
+## 
+##   model  winnow  trials  Accuracy   Kappa      Accuracy SD  Kappa SD   
+##   rules  FALSE    1      0.9878989  0.9846940  0.004164138  0.005265967
+##   rules  FALSE   10      0.9973930  0.9967024  0.001579486  0.001998000
+##   rules  FALSE   20      0.9982676  0.9978088  0.001224558  0.001549028
+##   rules   TRUE    1      0.9880439  0.9848778  0.003841605  0.004858834
+##   rules   TRUE   10      0.9975119  0.9968528  0.001570355  0.001986370
+##   rules   TRUE   20      0.9981913  0.9977122  0.001269577  0.001605972
+##   tree   FALSE    1      0.9816914  0.9768438  0.004728425  0.005978736
+##   tree   FALSE   10      0.9962976  0.9953167  0.001929613  0.002441103
+##   tree   FALSE   20      0.9973846  0.9966917  0.001604267  0.002029470
+##   tree    TRUE    1      0.9819549  0.9771767  0.004743423  0.005998144
+##   tree    TRUE   10      0.9964420  0.9954994  0.001772394  0.002242084
+##   tree    TRUE   20      0.9974184  0.9967345  0.001443030  0.001825348
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final values used for the model were trials = 20, model = rules
+##  and winnow = FALSE. 
 ## [1] "Accuracy: 0.999, 95% CI: (0.998,0.999)"
 ```
 
@@ -296,26 +622,152 @@ t3 = system.time(res3 <- mypredict('rf'))
 ```
 ## [1] "----- Applying rf method -----"
 ## [1] "Train and test user: carlitos, method: rf"
-## [1] "Elapse time = 16s"
+## [1] "Elapse time = 46s"
+## Random Forest 
+## 
+## 1869 samples
+##   55 predictor
+##    5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 1682, 1681, 1682, 1683, 1682, 1681, ... 
+## Resampling results across tuning parameters:
+## 
+##   mtry  Accuracy   Kappa      Accuracy SD  Kappa SD   
+##    2    0.9967339  0.9958716  0.004498099  0.005686069
+##   28    0.9980199  0.9974973  0.003196244  0.004040244
+##   55    0.9975932  0.9969587  0.003348771  0.004231647
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final value used for the model was mtry = 28. 
 ## [1] "Accuracy: 0.998, 95% CI: (0.994,1)"
 ## [1] "Train and test user: pedro, method: rf"
-## [1] "Elapse time = 13s"
+## [1] "Elapse time = 39s"
+## Random Forest 
+## 
+## 1568 samples
+##   55 predictor
+##    5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 1412, 1411, 1410, 1412, 1410, 1412, ... 
+## Resampling results across tuning parameters:
+## 
+##   mtry  Accuracy   Kappa      Accuracy SD  Kappa SD   
+##    2    0.9966184  0.9957583  0.004200105  0.005268957
+##   28    1.0000000  1.0000000  0.000000000  0.000000000
+##   55    0.9989788  0.9987197  0.002826467  0.003543497
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final value used for the model was mtry = 28. 
 ## [1] "Accuracy: 1, 95% CI: (0.996,1)"
 ## [1] "Train and test user: adelmo, method: rf"
-## [1] "Elapse time = 21s"
+## [1] "Elapse time = 57s"
+## Random Forest 
+## 
+## 2336 samples
+##   55 predictor
+##    5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 2103, 2102, 2102, 2103, 2102, 2103, ... 
+## Resampling results across tuning parameters:
+## 
+##   mtry  Accuracy   Kappa      Accuracy SD  Kappa SD   
+##    2    0.9955073  0.9942760  0.004609687  0.005874334
+##   28    0.9979036  0.9973291  0.002752966  0.003507369
+##   55    0.9990587  0.9988005  0.002068814  0.002636642
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final value used for the model was mtry = 55. 
 ## [1] "Accuracy: 1, 95% CI: (0.998,1)"
 ## [1] "Train and test user: charles, method: rf"
-## [1] "Elapse time = 18s"
-## [1] "Accuracy: 0.999, 95% CI: (0.996,1)"
+## [1] "Elapse time = 49s"
+## Random Forest 
+## 
+## 2124 samples
+##   55 predictor
+##    5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 1913, 1911, 1912, 1911, 1911, 1912, ... 
+## Resampling results across tuning parameters:
+## 
+##   mtry  Accuracy   Kappa      Accuracy SD  Kappa SD   
+##    2    0.9963754  0.9954376  0.004061458  0.005111948
+##   28    0.9975981  0.9969766  0.003313100  0.004170177
+##   55    0.9977389  0.9971539  0.003378337  0.004252277
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final value used for the model was mtry = 55. 
+## [1] "Accuracy: 1, 95% CI: (0.997,1)"
 ## [1] "Train and test user: eurico, method: rf"
-## [1] "Elapse time = 15s"
+## [1] "Elapse time = 43s"
+## Random Forest 
+## 
+## 1845 samples
+##   55 predictor
+##    5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 1661, 1660, 1659, 1661, 1660, 1661, ... 
+## Resampling results across tuning parameters:
+## 
+##   mtry  Accuracy   Kappa      Accuracy SD  Kappa SD   
+##    2    0.9990244  0.9987668  0.002598890  0.003283714
+##   28    0.9988076  0.9984924  0.002731277  0.003452920
+##   55    0.9978851  0.9973258  0.004213026  0.005327537
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final value used for the model was mtry = 2. 
 ## [1] "Accuracy: 0.998, 95% CI: (0.994,1)"
 ## [1] "Train and test user: jeremy, method: rf"
-## [1] "Elapse time = 18s"
-## [1] "Accuracy: 1, 95% CI: (0.997,1)"
+## [1] "Elapse time = 47s"
+## Random Forest 
+## 
+## 2045 samples
+##   55 predictor
+##    5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 1839, 1841, 1841, 1842, 1839, 1840, ... 
+## Resampling results across tuning parameters:
+## 
+##   mtry  Accuracy   Kappa      Accuracy SD  Kappa SD   
+##    2    0.9964794  0.9954396  0.003685670  0.004774424
+##   28    0.9994130  0.9992392  0.001743070  0.002260027
+##   55    0.9984837  0.9980352  0.003005609  0.003894880
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final value used for the model was mtry = 28. 
+## [1] "Accuracy: 0.998, 95% CI: (0.994,1)"
 ## [1] "Train and test user: AllUsers, method: rf"
-## [1] "Elapse time = 224s"
-## [1] "Accuracy: 0.998, 95% CI: (0.997,0.999)"
+## [1] "Elapse time = 649s"
+## Random Forest 
+## 
+## 11776 samples
+##    55 predictor
+##     5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 10600, 10598, 10599, 10599, 10597, 10599, ... 
+## Resampling results across tuning parameters:
+## 
+##   mtry  Accuracy   Kappa      Accuracy SD  Kappa SD   
+##    2    0.9953807  0.9941567  0.001882120  0.002380992
+##   28    0.9984121  0.9979915  0.001204786  0.001523935
+##   55    0.9967732  0.9959183  0.001777666  0.002248829
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final value used for the model was mtry = 28. 
+## [1] "Accuracy: 0.999, 95% CI: (0.999,1)"
 ```
 
 ```r
@@ -328,7 +780,7 @@ res
 
 ```
 ##    problem_id rpart_filter rpart_all C5.0_filter C5.0_all rf_filter rf_all
-## 1           1            C         C           B        B         B      B
+## 1           1            B         C           B        B         B      B
 ## 2           2            A         A           A        A         A      A
 ## 3           3            C         C           B        B         B      B
 ## 4           4            A         A           A        A         A      A
@@ -343,10 +795,10 @@ res
 ## 13         13            B         C           B        B         B      B
 ## 14         14            A         A           A        A         A      A
 ## 15         15            E         C           E        E         E      E
-## 16         16            E         A           E        E         E      E
+## 16         16            D         A           E        E         E      E
 ## 17         17            A         A           A        A         A      A
 ## 18         18            B         A           B        B         B      B
-## 19         19            C         A           B        B         B      B
+## 19         19            B         A           B        B         B      B
 ## 20         20            B         C           B        B         B      B
 ```
 
