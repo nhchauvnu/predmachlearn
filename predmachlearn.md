@@ -1,5 +1,5 @@
 # Practical machine learning course project
-#### by Chau Nguyen
+#### by Chau Nguyen - Aug 20, 2015
 
 ## Load and check data
 First we check if the data files exist on the local disk. If not
@@ -166,10 +166,47 @@ The following R code performs what we have described.
 
 ```r
 library(caret)
+```
+
+```
+## Loading required package: lattice
+## Loading required package: ggplot2
+## Find out what's changed in ggplot2 with
+## news(Version == "1.0.1", package = "ggplot2")
+```
+
+```r
 library(rpart)
 library(dplyr)
-library(doMC)
+```
 
+```
+## 
+## Attaching package: 'dplyr'
+## 
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+## 
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
+```r
+library(doMC)
+```
+
+```
+## Loading required package: foreach
+## foreach: simple, scalable parallel programming from Revolution Analytics
+## Use Revolution R for scalability, fault tolerance and more.
+## http://www.revolutionanalytics.com
+## Loading required package: iterators
+## Loading required package: parallel
+```
+
+```r
 # Set seed value
 set.seed(53234)
 
@@ -241,25 +278,25 @@ t1 = system.time(res1 <- mypredict('rpart'))
 ```
 ## [1] "----- Applying rpart method -----"
 ## [1] "Train and test user: carlitos, method: rpart"
-## [1] "Elapse time = 2.8s"
+## [1] "Elapse time = 2.4s"
 ## [1] "Accuracy: 0.685, 95% CI: (0.658,0.71)"
 ## [1] "Train and test user: pedro, method: rpart"
-## [1] "Elapse time = 2.7s"
+## [1] "Elapse time = 2.3s"
 ## [1] "Accuracy: 0.989, 95% CI: (0.981,0.995)"
 ## [1] "Train and test user: adelmo, method: rpart"
-## [1] "Elapse time = 3s"
+## [1] "Elapse time = 2.4s"
 ## [1] "Accuracy: 0.687, 95% CI: (0.663,0.71)"
 ## [1] "Train and test user: charles, method: rpart"
-## [1] "Elapse time = 3s"
+## [1] "Elapse time = 2.3s"
 ## [1] "Accuracy: 0.664, 95% CI: (0.639,0.689)"
 ## [1] "Train and test user: eurico, method: rpart"
-## [1] "Elapse time = 2.9s"
+## [1] "Elapse time = 2.3s"
 ## [1] "Accuracy: 0.66, 95% CI: (0.632,0.686)"
 ## [1] "Train and test user: jeremy, method: rpart"
-## [1] "Elapse time = 3s"
+## [1] "Elapse time = 2.3s"
 ## [1] "Accuracy: 0.697, 95% CI: (0.672,0.721)"
 ## [1] "Train and test user: AllUsers, method: rpart"
-## [1] "Elapse time = 12s"
+## [1] "Elapse time = 13s"
 ## CART 
 ## 
 ## 11776 samples
@@ -288,6 +325,26 @@ t2 = system.time(res2 <- mypredict('C5.0'))
 ```
 ## [1] "----- Applying C5.0 method -----"
 ## [1] "Train and test user: carlitos, method: C5.0"
+```
+
+```
+## Loading required package: C50
+## Loading required package: plyr
+## -------------------------------------------------------------------------
+## You have loaded plyr after dplyr - this is likely to cause problems.
+## If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
+## library(plyr); library(dplyr)
+## -------------------------------------------------------------------------
+## 
+## Attaching package: 'plyr'
+## 
+## The following objects are masked from 'package:dplyr':
+## 
+##     arrange, count, desc, failwith, id, mutate, rename, summarise,
+##     summarize
+```
+
+```
 ## [1] "Elapse time = 34s"
 ## [1] "Accuracy: 0.997, 95% CI: (0.992,0.999)"
 ## [1] "Train and test user: pedro, method: C5.0"
@@ -303,10 +360,10 @@ t2 = system.time(res2 <- mypredict('C5.0'))
 ## [1] "Elapse time = 25s"
 ## [1] "Accuracy: 1, 95% CI: (0.997,1)"
 ## [1] "Train and test user: jeremy, method: C5.0"
-## [1] "Elapse time = 17s"
+## [1] "Elapse time = 16s"
 ## [1] "Accuracy: 1, 95% CI: (0.997,1)"
 ## [1] "Train and test user: AllUsers, method: C5.0"
-## [1] "Elapse time = 621s"
+## [1] "Elapse time = 554s"
 ## C5.0 
 ## 
 ## 11776 samples
@@ -346,25 +403,40 @@ t3 = system.time(res3 <- mypredict('rf'))
 ```
 ## [1] "----- Applying rf method -----"
 ## [1] "Train and test user: carlitos, method: rf"
-## [1] "Elapse time = 46s"
+```
+
+```
+## Loading required package: randomForest
+## randomForest 4.6-10
+## Type rfNews() to see new features/changes/bug fixes.
+## 
+## Attaching package: 'randomForest'
+## 
+## The following object is masked from 'package:dplyr':
+## 
+##     combine
+```
+
+```
+## [1] "Elapse time = 41s"
 ## [1] "Accuracy: 0.998, 95% CI: (0.994,1)"
 ## [1] "Train and test user: pedro, method: rf"
 ## [1] "Elapse time = 35s"
 ## [1] "Accuracy: 1, 95% CI: (0.996,1)"
 ## [1] "Train and test user: adelmo, method: rf"
-## [1] "Elapse time = 53s"
+## [1] "Elapse time = 52s"
 ## [1] "Accuracy: 1, 95% CI: (0.998,1)"
 ## [1] "Train and test user: charles, method: rf"
-## [1] "Elapse time = 48s"
+## [1] "Elapse time = 44s"
 ## [1] "Accuracy: 0.999, 95% CI: (0.996,1)"
 ## [1] "Train and test user: eurico, method: rf"
-## [1] "Elapse time = 41s"
+## [1] "Elapse time = 40s"
 ## [1] "Accuracy: 0.999, 95% CI: (0.995,1)"
 ## [1] "Train and test user: jeremy, method: rf"
-## [1] "Elapse time = 54s"
+## [1] "Elapse time = 45s"
 ## [1] "Accuracy: 1, 95% CI: (0.997,1)"
 ## [1] "Train and test user: AllUsers, method: rf"
-## [1] "Elapse time = 621s"
+## [1] "Elapse time = 582s"
 ## Random Forest 
 ## 
 ## 11776 samples
@@ -376,10 +448,10 @@ t3 = system.time(res3 <- mypredict('rf'))
 ## Summary of sample sizes: 10598, 10599, 10598, 10599, 10598, 10599, ... 
 ## Resampling results across tuning parameters:
 ## 
-##   mtry  Accuracy   Kappa      Accuracy SD   Kappa SD   
-##    2    0.9955418  0.9943606  0.0022913987  0.002898995
-##   28    0.9988960  0.9986036  0.0009309518  0.001177563
-##   55    0.9954400  0.9942317  0.0021130786  0.002673410
+##   mtry  Accuracy   Kappa      Accuracy SD  Kappa SD   
+##    2    0.9956777  0.9945324  0.002098047  0.002654399
+##   28    0.9988706  0.9985715  0.001093162  0.001382710
+##   55    0.9955081  0.9943177  0.002055661  0.002600692
 ## 
 ## Accuracy was used to select the optimal model using  the largest value.
 ## The final value used for the model was mtry = 28. 
